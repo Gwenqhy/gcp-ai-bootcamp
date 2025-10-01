@@ -29,10 +29,59 @@ https://conversational-agents.cloud.google.com/projects/<PROJECT_ID>/prebuilt
 ![Tools Page](./images/tools_page.png)
 
 - Scroll down to **Schema**
-- Under Server URL, replace the URL with:
+
+In line 8, replace the server URL with an **active webhook**
+- Paste the link in a new tab and follow the instructions to the prebuilt tool installer to deploy webhooks
 ```bash
-https://travel-places-search-288715243473.us-central1.run.app
+https://cloud.google.com/dialogflow/cx/docs/concept/playbook/prebuilt/travel#tool-setup
 ```
+![Tool installer](https://github.com/user-attachments/assets/e7e3dc66-0b86-432a-8c5a-3c5af6ce389c)
+
+- Ensure that the user running the `installer.py` script has the following minimum
+permissions in IAM & Admin > your-project-number@developer.gserviceaccount.com > (Pencil icon) Edit Principal
+```
+https://console.cloud.google.com/
+```
+    Service Usage Admin
+    Cloud Functions Developer
+    Firebase
+    Develop Admin
+    Storage Object User
+  
+- Upload the unzipped Installer folder into your GCP Cloud Shell Editor
+![Pre-built Agent Settings](https://github.com/user-attachments/assets/41e99e79-c297-4c83-bfc1-b7a91f5deb75)
+
+
+- Run in terminal
+```bash
+cd <Installer_folder_path>
+```
+- Create and Activate Virtual Environment (Linux):
+
+   | Environment | Command to Create Venv | Command to Activate Venv | 
+   | :--- | :--- | :--- | 
+   | Linux/macOS (Bash) | `python3 -m venv venv` | `source venv/bin/activate` | 
+   | Windows (Command Prompt) | `python -m venv venv` | `venv\Scripts\activate` | 
+   | Windows (PowerShell) | `python -m venv venv` | `venv\Scripts\Activate.ps1` |
+
+
+- Install Dependencies:
+```
+pip install -r requirements.txt
+```
+
+- Authenticate the gcloud CLI: This command ensures your local terminal has the necessary permissions to communicate with your Google Cloud Project. Follow the browser prompts to sign in.
+```
+gcloud auth application-default login
+```
+
+- To deploy webhooks for our prebuilt travel agent
+```
+python installer.py --project-id=<YOUR_PROJECT_ID> --prebuilt-id=travel
+```
+
+- Paste the webhooks into its respective tool's schema, under server URL 
+
 - Once done, click **Save**
 ![Replace URL](./images/replace_server_url.png)
 
